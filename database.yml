@@ -1,19 +1,11 @@
 ---
   - hosts: database
     become: true
-    tasks:
-      - name: Download MySQL Community Repo
-        get_url: 
-          url: http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
-          dest: /tmp          
-
-      - name: Install MySQL Community Repo
-        command: /usr/bin/rpm -ivh /tmp/mysql-community-release-el7-7.noarch.rpm
-            
+    tasks:     
 
       - name: install mysql-server
-        yum: name=mysql-server state=present update_cache=yes
+        apt: name=mysql-server state=present update_cache=yes
         
 
       - name: ensure mysql started
-        service: name=mysql-server state=started enabled=yes     
+        service: name=mysql state=started enabled=yes     

@@ -3,4 +3,4 @@
     become: true
     tasks:
       - name: install curl
-        yum: name=curl state=present update_cache=yes
+        apt: name=curl state=present update_cache=yes
