@@ -15,3 +15,24 @@
 
       - name: ensure httpd started
         service: name=httpd state=started enabled=yes       
+
+      - name: ensure mod-wsgi enabled
+        apache2_module: state=present name=wsgi
+        notify: restart httpd
+
+      - name: copy demo app source
+        copy: src=demo/app/ dest=/var/www/demo mode=0755
+        notify: restart httpd
+
+      - name: copy apache virtual host config
+        copy: src=demo/demo.conf dest=/etc/httpd/sites-available
+        notify: restart httpd
+
+      - name: setup python virtualenv
+        pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+        notify: restart httpd
+
+
+    handlers:
+      - name: restart httpd
+        service: name=httpd state=restarted    
