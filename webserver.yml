@@ -1,5 +1,5 @@
 ---
-  - hosts: database
+  - hosts: webserver
     become: true
     tasks:
       - name: install web components
