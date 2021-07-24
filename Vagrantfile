@@ -1,4 +1,3 @@
-
 Vagrant.configure("2") do |config|
   
   config.vm.define "ans" do |ans|
