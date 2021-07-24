@@ -5,16 +5,15 @@
       - name: Download MySQL Community Repo
         get_url: 
           url: http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
-          dest: /tmp
-          state: present 
-          
+          dest: /tmp          
 
       - name: Install MySQL Community Repo
         command: /usr/bin/rpm -ivh /tmp/mysql-community-release-el7-7.noarch.rpm
-          state: present 
-          update_cache: yes
+            
 
       - name: install mysql-server
         yum: name=mysql-server state=present update_cache=yes
-          state: present 
-          update_cache: yes
+        
+
+      - name: ensure mysql started
+        service: name=mysql-server state=started enabled=yes     

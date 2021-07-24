@@ -1,11 +1,17 @@
 ---
-  - hosts: webserver
+  - hosts: database
     become: true
     tasks:
       - name: install web components
-        apt: name={{item}} state=present update_cache=yes
-        with_items:
-          - apache2
-          - libapache2-mod-wsgi
-          - python-pip
+        yum: 
+          name:      
+          - epel-release
+          - httpd
+          - mod_wsgi
+          - python3-pip
           - python-virtualenv
+          state: present 
+          update_cache: yes
+
+      - name: ensure httpd started
+        service: name=httpd state=started enabled=yes       
