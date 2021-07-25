@@ -7,8 +7,9 @@
           name:      
             - apache2
             - libapache2-mod-wsgi
-            - python3-pip
+            - python-pip
             - python-virtualenv
+            - python-mysqldb
           state: present
           update_cache: yes          
 
@@ -21,15 +22,16 @@
 
       - name: copy demo app source
         copy: src=demo/app/ dest=/var/www/demo mode=0755
-        notify: restart restart apache2
+        notify: restart apache2
 
       - name: copy apache virtual host config
         copy: src=demo/demo.conf dest=/etc/apache2/sites-available
         notify: restart apache2
 
-      - name: setup python virtualenv
-        pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
-        notify: restart apache2
+      #- name: setup python virtualenv
+      #  pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+      #  notify: restart apache2
+
 
     handlers:
       - name: restart apache2
